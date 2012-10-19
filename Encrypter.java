@@ -1,4 +1,4 @@
-package cmsc414.p1;
+package encrypter.p;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
