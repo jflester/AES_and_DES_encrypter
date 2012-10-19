@@ -10,6 +10,16 @@ import javax.crypto.*;
 import javax.crypto.spec.*;
 import java.util.*;
 
+/* Encrypter uses Base64Coder class to do conversions in encrypt and decrypt.
+   
+   Encrypter supports AES and DES cipher algorithms.
+   Is currently in ECB mode with NoPadding as padding.
+   Does CBC manually in encrypt and decrypt methods.
+   
+   Strings must be in multiples of 64-bits or 128-bits
+   for DES and AES, respectively.
+*/
+
 public class Encrypter {
 	private String encryptionType;
 	private byte[] ivAES = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -17,12 +27,14 @@ public class Encrypter {
 	private IvParameterSpec ipsAES = new IvParameterSpec(ivAES);
 	private IvParameterSpec ipsDES = new IvParameterSpec(ivDES);
 	private SecretKey key;
-	
+
+	//Basic Constructor.
 	public Encrypter(String encryptionType) {
 		this.encryptionType = encryptionType;
 		this.key = this.generateSecretKey();
 	}
-	
+
+	//Generates a secret key.
 	public SecretKey generateSecretKey() {
 		KeyGenerator keyGen = null;
 		SecretKey key = null;
@@ -34,7 +46,9 @@ public class Encrypter {
 		}
 		return key;
 	}
-	
+
+	//Xors two byte arrays (byte[]) and returns a single byte[].
+	//Does not modify either of the arrays passed in.
 	private byte[] xorba(byte[] one, byte[] two){
 		byte[] res = new byte[one.length];
 		for (int i = 0; i < one.length; i++){
@@ -43,7 +57,8 @@ public class Encrypter {
 		}
 		return res;
 	}
-	
+
+	//Encrypts a String plaintext with the given secretKey using AES/DES.
 	public String encrypt(String plainText, SecretKey secretKey) {
 		byte[] encryptThis = null;
 		byte[] ciphertext = null;
@@ -109,6 +124,7 @@ public class Encrypter {
 		return res;
 	}
 
+	//Decrypts the given cipherText using the given secretKey and AES/DES.
 	public String decrypt(String cipherText, SecretKey secretKey) {
 		String plaintext = "";
 		Cipher cipher = null;
