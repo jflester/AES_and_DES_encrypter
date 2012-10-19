@@ -1,4 +1,4 @@
-package cmsc414.p1;
+package encrypter.p;
 // Copyright 2003-2010 Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland
 // www.source-code.biz, www.inventec.ch/chdh
 //
